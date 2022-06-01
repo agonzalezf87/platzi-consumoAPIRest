@@ -9,5 +9,8 @@ Curso de consumo de API Rest en Platzi.com
 
 ## Clases: HTTP Status codes y API Key
 
-## Clases: HTTP Codes
+## Clases sobre: HTTP Codes
 Se añade sección de favoritos a la aplicación web.
+
+## Utilizando el método POST
+Se genera método para añadir dogs a favoritos en la API.
