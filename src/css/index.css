@@ -22,7 +22,7 @@ main {
 }
 
 main section img {
-    max-height: 550px;
+    width: 300px;
 }
 
 main button {
