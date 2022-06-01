@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.4rem;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main section img {
+    max-height: 550px;
+}
+
+main button {
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    border: none;
+    background-color: darkcyan;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+main button:hover, main button:active {
+    border: solid 1px darkolivegreen;
+}
