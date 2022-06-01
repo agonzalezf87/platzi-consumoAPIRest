@@ -1,4 +1,4 @@
-const API_URL = 'https://api.thedogapi.com/v1/images/search?limit=3'
+const API_URL = 'https://api.thedogapi.com/v1/images/search?limit=3&api_key=f3b59fc0-562d-403f-b3da-e17f330d106f'
 
 const dogButton = document.querySelector('#dogButton')
 
