@@ -8,3 +8,6 @@ Curso de consumo de API Rest en Platzi.com
 ## Clase: Endpoints y query parameters
 
 ## Clases: HTTP Status codes y API Key
+
+## Clases: HTTP Codes
+Se añade sección de favoritos a la aplicación web.

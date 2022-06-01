@@ -1,28 +1,34 @@
-const API_URL = 'https://api.thedogapi.com/v1/images/search?limit=3&api_key=f3b59fc0-562d-403f-b3da-e17f330d106f'
+const API_URL_RANDOM = 'https://api.thedogapi.com/v1/images/search?limit=2&api_key=f3b59fc0-562d-403f-b3da-e17f330d106f'
+const API_URL_FAVORITES = 'https://api.thedogapi.com/v1/favourites?limit=3&api_key=f3b59fc0-562d-403f-b3da-e17f330d106f'
 
 const dogButton = document.querySelector('#dogButton')
+const spanError = document.querySelector('#randomDogsError')
 
-async function getPicture() {
-    let res = await fetch(API_URL)
+async function loadRandomDogs() {
+    let res = await fetch(API_URL_RANDOM)
     let data = await res.json()
 
-    const img1 = document.getElementById('img1')
-    const img2 = document.getElementById('img2')
-    const img3 = document.getElementById('img3')
-    img1.src = data[0].url
-    img2.src = data[1].url
-    img3.src = data[2].url
+    if(res.status !==  200){
+        spanError.innerHTML = `Hubo un error: ${res.status}`
+    }else{
+        const img1 = document.getElementById('img1')
+        const img2 = document.getElementById('img2')
+        img1.src = data[0].url
+        img2.src = data[1].url
+    }
 }
 
-/* 
-fetch(URL)
-.then(res => res.json())
-.then(data => {
-    const img = document.querySelector('img')
-    img.src = data[0].url
-});
-*/
+async function loadFavoritesDogs() {
+    let res = await fetch(API_URL_FAVORITES)
+    let data = await res.json()
 
-dogButton.addEventListener('click', getPicture)
+    if(res.status !== 200){
+        spanError.innerHTML = `Error ${res.status}: ${data.message}`
+    }else{
 
-getPicture()
+    }
+}
+dogButton.addEventListener('click', loadRandomDogs)
+
+loadRandomDogs()
+loadFavoritesDogs()

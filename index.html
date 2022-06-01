@@ -9,13 +9,31 @@
     </head>
     <body>
         <main>
-            <h1>Random Dogs</h1>
-            <section>
-                <img id="img1" alt="Random dog picture">
-                <img id="img2" alt="Random dog picture">
-                <img id="img3" alt="Random dog picture">
+            <h1>We Love Dogs</h1>
+
+            <span id="randomDogsError"></span>
+
+            <section id="randomDogs">
+                <h2>Random Dogs</h2>
+
+                <article>
+                    <img id="img1" alt="Random dog picture">
+                    <button type="button">Save dog in favorites</button>
+                </article>
+                <article>
+                    <img id="img2" alt="Random dog picture">
+                    <button type="button">Save dog in favorites</button>
+                </article>
+                <button id="dogButton" type="button">New Dogs!</button>
             </section>
-            <button id="dogButton" type="button">Dogs!</button>
+
+            <section id="favoritesDogs">
+                <h2>Favorite Dogs</h2>
+                <article>
+                    <img id="img1" alt="Random dog picture">
+                    <button type="button">Remove from favorites</button>
+                </article>
+            </section>
         </main>
         <script src="./src/js/index.js"></script>
     </body>
