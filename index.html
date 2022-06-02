@@ -4,33 +4,49 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Random Dogs</title>
+        <title>The Dog App</title>
         <link rel="icon" type="image/x-icon" href="./src/media/paw-solid.svg">
         <link rel="stylesheet" href="./src/css/index.css">
+        <script src="https://kit.fontawesome.com/31316ab1a1.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <main>
-            <h1>We Love Dogs</h1>
+            <h1>The Dog App</h1>
 
             <span id="dogsError"></span>
-
-            <section id="randomDogs">
+            <section class="sectionTitle">
                 <h2>Random Dogs</h2>
-
-                <button id="dogButton" type="button">More Dogs!</button>
             </section>
-            
-            <section id="uploadingDog">
+            <section id="randomDogs">
+                <section class="dogCard">
+                    <img id="randImg1" alt="Random Dog Picture!">
+                    <button id="addFav1" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
+                </section>
+                <section class="dogCard">
+                    <img id="randImg2" alt="Random Dog Picture!">
+                    <button id="addFav2" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
+                </section>
+                <section class="dogCard">
+                    <img id="randImg3" alt="Random Dog Picture!">
+                    <button id="addFav3" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
+                </section>
+                <button id="dogButton" type="button">Reload <i class="fa-solid fa-arrow-rotate-right"></i> </button>
+            </section>
+            <section class="sectionTitle">
                 <h2>Upload your dog photography</h2>
+            </section>
+            <section id="uploadingDog">
                 <form id="uploadingForm">
                     <input id="file" type="file" name="file">
-                    <button type="button" id="btnUploadDog">Send dog</button>
+                    <button type="button" id="btnUploadDog">Send dog <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
                 </form>
             </section>
-
-            <section id="favouriteDogs">
+            
+            <section class="sectionTitle">
                 <h2>Favourite Dogs</h2>
-
+            </section>
+            <section id="favouriteDogs">
+                
             </section>
         </main>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
