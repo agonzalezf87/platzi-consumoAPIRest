@@ -1,12 +1,13 @@
 const API_URL = 'https://api.thedogapi.com/v1/images/search?limit=3'
-const API_KEY = 'api_key=f3b59fc0-562d-403f-b3da-e17f330d106f'
+const API_KEY = 'f3b59fc0-562d-403f-b3da-e17f330d106f'
 const API_URL_FAVOURITES = 'https://api.thedogapi.com/v1/favourites'
+const API_URL_UPLOAD = 'https://api.thedogapi.com/v1/images/upload'
 
 const dogButton = document.querySelector('#dogButton')
 const spanError = document.querySelector('#dogsError')
 const randomSection = document.querySelector('#randomDogs')
 const favouritesSection = document.querySelector('#favouriteDogs')
-
+const btnUploadDog = document.querySelector('#btnUploadDog')
 
 async function loadRandomDogs() {
     let res = await fetch(API_URL)
@@ -39,7 +40,12 @@ async function loadRandomDogs() {
 }
 
 async function loadFavouriteDogs() {
-    let res = await fetch(`${API_URL_FAVOURITES}?${API_KEY}`)
+    let res = await fetch(API_URL_FAVOURITES, {
+        method: 'GET',
+        headers: {
+            'X-API-KEY': API_KEY
+        }
+    })
     let data = await res.json()
     if(res.status !== 200){
         spanError.innerHTML = `Error ${res.status}: ${data.message}`
@@ -47,6 +53,12 @@ async function loadFavouriteDogs() {
         const favArticles = document.querySelectorAll('#favouriteDogs article')
         if(favArticles.length > 0){favArticles.forEach(article => article.remove())}
         if(data.length > 0){
+            data.sort((a, b) => {
+                let dateA = new Date(a.created_at)
+                let dateB = new Date(b.created_at)
+
+                return dateB - dateA
+            })
             data.forEach(dog => {
                 const article = document.createElement('article')
                 const img = document.createElement('img')
@@ -61,7 +73,6 @@ async function loadFavouriteDogs() {
                 article.appendChild(btn)
     
                 favouritesSection.appendChild(article)
-                /* console.log(article) */
             })
         }else {
             favouritesSection.innerHTML += "<p>Add favourite dogs in order to display them here...</p>"
@@ -70,9 +81,10 @@ async function loadFavouriteDogs() {
 }
 
 async function saveFavouriteDog(id) {
-    const res = await fetch(`${API_URL_FAVOURITES}?${API_KEY}`, {
+    const res = await fetch(API_URL_FAVOURITES, {
         method: 'POST',
         headers: {
+            'X-API-KEY' : API_KEY,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -85,14 +97,16 @@ async function saveFavouriteDog(id) {
         spanError.innerHTML = `Error ${res.status}: ${data.message}`
     }else{
         loadFavouriteDogs()
-        /* console.log('Dog added to favourites.') */
     }
     
 }
 
 async function deleteFavouriteDog(id) {
-    const res = await fetch(`${API_URL_FAVOURITES}/${id}?${API_KEY}`, {
+    const res = await fetch(`${API_URL_FAVOURITES}/${id}`, {
         method: 'DELETE',
+        headers: {
+            'X-API-KEY': API_KEY
+        }
     })
     const data = await res.json()
 
@@ -100,11 +114,31 @@ async function deleteFavouriteDog(id) {
         spanError.innerHTML = `Error ${res.status}: ${data.message}`
     }else{
         loadFavouriteDogs()
-        /* console.log('Dog deleted from favourites.') */
+    }
+}
+
+async function uploadDogPic() {
+    const form = document.querySelector('#uploadingForm')
+    const formData = new FormData(form)
+
+    const res = await fetch(API_URL_UPLOAD, {
+        method: 'POST',
+        headers: {
+            //'Content-Type': 'multipart/form-data', no needed because of FormData Powers!
+            'X-API-KEY': API_KEY
+        },
+        body: formData
+    })
+
+    if(res.status !== 200){
+        spanError.innerHTML = `Error ${res.status}: ${data.message}`
+    }else{
+        loadFavouriteDogs()
     }
 }
 
 dogButton.onclick = () => loadRandomDogs()
+btnUploadDog.onclick = () => uploadDogPic()
 
 loadRandomDogs()
 loadFavouriteDogs()
