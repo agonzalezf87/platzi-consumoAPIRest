@@ -1,3 +1,8 @@
+const api = axios.create({
+    baseURL: 'https://api.thedogapi.com/v1'
+})
+api.defaults.headers.common['X-API-KEY'] = 'f3b59fc0-562d-403f-b3da-e17f330d106f'
+
 const API_URL = 'https://api.thedogapi.com/v1/images/search?limit=3'
 const API_KEY = 'f3b59fc0-562d-403f-b3da-e17f330d106f'
 const API_URL_FAVOURITES = 'https://api.thedogapi.com/v1/favourites'
@@ -81,7 +86,10 @@ async function loadFavouriteDogs() {
 }
 
 async function saveFavouriteDog(id) {
-    const res = await fetch(API_URL_FAVOURITES, {
+    const {data, status} = await api.post('/favourites', {
+        image_id: id,
+    })
+    /* const res = await fetch(API_URL_FAVOURITES, {
         method: 'POST',
         headers: {
             'X-API-KEY' : API_KEY,
@@ -91,10 +99,10 @@ async function saveFavouriteDog(id) {
             image_id: id
         }),
     })
-    const data = await res.json()
+    const data = await res.json() */
 
-    if(res.status !== 200){
-        spanError.innerHTML = `Error ${res.status}: ${data.message}`
+    if(status !== 200){
+        spanError.innerHTML = `Error ${status}: ${data.message}`
     }else{
         loadFavouriteDogs()
     }
