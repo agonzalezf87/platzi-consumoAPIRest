@@ -8,7 +8,8 @@
         <link rel="icon" type="image/x-icon" href="./src/media/paw-solid.svg">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">   
+        <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet"> 
         <link rel="stylesheet" href="./src/css/index.css">
         <script src="https://kit.fontawesome.com/31316ab1a1.js" crossorigin="anonymous"></script>
     </head>
@@ -17,10 +18,6 @@
             <h1>The Dog App</h1>
         </header>
         <main>
-            <span id="dogsError"></span>
-            <section class="sectionTitle">
-                <h2 class="sectionTitle__text">Random Dogs</h2>
-            </section>
             <section class="random" id="randomDogs">
                 <article class="dogCard">
                     <img class="dogCard__image" id="randImg1" alt="Random Dog Picture!">
@@ -36,23 +33,35 @@
                 </article>
             </section>
             <section class="sectionTitle reload">
-                <button class="reloadBtn" id="dogButton" type="button">Reload <i class="fa-solid fa-arrow-rotate-right"></i> </button>
-            </section>
-            <section class="sectionTitle">
-                <h2 class="sectionTitle__text">Favourite Dogs</h2>
-            </section>
-            <section class="favourites" id="favouriteDogs">
+                <button class="reloadBtn" id="dogButton" type="button">Dogs! <i class="fa-solid fa-arrow-rotate-right"></i> </button>
             </section>
             <section class="sectionTitle">
                 <h2 class="sectionTitle__text">Upload Your Dog Pic</h2>
             </section>
-            <section class="upload" id="uploadingDog">
-                <form class="upload__form" id="uploadingForm">
-                    <input class="upload__form__file" id="file" type="file" name="file">
-                    <button class="upload__form__btn" type="button" id="btnUploadDog"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-                </form>
+            <section class="upload">
+                <section class="upload__card" id="uploadingDog">
+                    <form class="upload__form" id="uploadingForm">
+                        <label class="upload__form__label" for="file">Select Picture<i class="fa-solid fa-shield-dog"></i></label>
+                        <input class="upload__form__file" id="file" type="file" name="file" accept=".jpg, .png">
+                        <button class="upload__form__btn" type="button" id="btnUploadDog"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+                    </form>
+                </section>
+            </section>
+            <section class="sectionTitle">
+                <h2 class="sectionTitle__text">Your Favourite Dogs</h2>
+            </section>
+            <section class="favourites" id="favouriteDogs">
             </section>
         </main>
+        <footer>
+            <section class="footer__content">
+                <div>
+                    <a href="http://"><i class="fa-brands fa-github"></i></a>&copy; Antonio Rafael González Ferrer 2022
+                </div>
+                <div>Visit the <a href="https://github.com/agonzalezf87/thedogapp" target="_blank">Repository</a></div>
+                <div>Powered by <a href="https://thedogapi.com/" target="_blank">The Dog API</a></div>
+            </section>
+        </footer>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="./src/js/index.js"></script>
     </body>

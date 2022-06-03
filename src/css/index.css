@@ -6,6 +6,7 @@
     --site-color5: #417571;
     --site-color6: rgba(65, 117, 113, .6);
     --site-color7: rgba(13, 23, 26, .6);
+    --site-color8: rgba(13, 23, 26, .8);
 }
 
 * {
@@ -19,7 +20,7 @@ html {
 }
 
 body {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Secular One', sans-serif;
     font-size: 1.4rem;
     background-color: var(--site-color2);
 }
@@ -43,11 +44,21 @@ button:hover, button:active {
     background-color: var(--site-color6);
 }
 
+a {
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: var(--site-color5);
+}
+
+a:hover, a:active {
+    text-decoration: underline;
+}
+
 header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 1;
     background-color: var(--site-color3);
     width: 100vw;
     height: 50px;
@@ -65,15 +76,14 @@ main {
     color: var(--site-color3);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 52px;
+    margin: 52px auto 80px;
     overflow: hidden;
 }
 
 .sectionTitle {
     width: 100%;
     height: 28px;
-    margin: 10px 0;
+    margin: 20px 0 10px;
 }
 
 .sectionTitle__text {
@@ -85,13 +95,18 @@ main {
     font-weight: 600;
 }
 
-.random, .favourites {
+.random {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-x: scroll;
+    overflow-x: auto;
     flex-wrap: nowrap;
-    padding-bottom: 10px;
+    padding: 10px 0;
+}
+
+.favourites {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 10px 0;
 }
 
 .dogCard {
@@ -100,15 +115,18 @@ main {
     margin: 0 15px;
     position: relative;
     display: flex;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
     background-color: var(--site-color3);
     border-radius: 15px;
+    box-shadow: 0 0 10px var(--site-color7);
+    border: 5px solid var(--site-color4)
 }
 
 .dogCard__image {
-    max-width: 275px;
-    max-height: 325px;
+    max-width: 270px;
+    max-height: 320px;
 }
 
 .dogCard__btn {
@@ -117,14 +135,69 @@ main {
     right: 10px;
 }
 
+.upload {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.upload__card {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload__form {
+    display: flex;
+    align-items: center;
+}
+
+.upload__form__label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    background-color: var(--site-color3);
+    padding: 8px 10px;
+    color: var(--site-color4);
+    line-height: 1.8rem;
+    cursor: pointer;
+    border-radius: 5px 0 0 5px;
+}
+
+.upload__form__label > i {
+    font-size: 1.6rem;
+    margin-left: 5px;
+}
+
+.upload__form__file {
+    display: none;
+}
+
+.upload__form__btn {
+    width: 64px;
+    height: 34px;
+    border-radius: 0 5px 5px 0;
+    background-color: var(--site-color3);
+}
+
+.upload__form__label:hover, .upload__form__label:active{
+    background-color: var(--site-color8);
+}
+
+.favourites > .dogCard .dogCard__btn {
+    top: auto;
+    bottom: 10px;
+    right: 10px;
+}
+
 .sectionTitle.reload {
     display: flex;
     justify-content: center;
 }
 
-.reloadBtn, .upload__form__btn {
+.reloadBtn {
     width: 128px;
-    height: 36px;
+    height: 32px;
     border-radius: 10px;
     background-color: var(--site-color3);
     border: 1px solid var(--site-color5);
@@ -134,19 +207,116 @@ main {
     background-color: var(--site-color7);
 }
 
-.upload__form__btn {
-    width: 64px;
-}
-
-#dogsError {
-    background-color: maroon;
-    color: white;
-    font-size: 1.2rem;
+.errorMessage{
+    width: 100vw;
+    min-height: 20px;
+    background-color: #701C1C;
+    color: #F0BBBB;
+    font-size: 1rem;
     font-weight: bold;
     padding: 10px 5px;
-    display: none;
+    display: inline-block;
+    position: fixed;
+    bottom: 64px;
+    left: 0;
+    z-index: 1;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-#dogsError > i {
+.errorMessage .fa-solid {
+    margin-right: 8px;
+}
+
+.errorMessage > i {
     margin-right: 10px;
+}
+
+footer {
+    width: 100vw;
+    height: 64px;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: var(--site-color3);
+    color: var(--site-color4);
+    font-family: 'Patrick Hand', cursive;
+}
+
+.footer__content {
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+.footer__content div {
+    line-height: 1.5rem;
+    text-align: center;
+}
+
+.footer__content a {
+    font-size: 1.2rem;
+}
+
+.footer__content div a {
+    margin-right: 8px;
+}
+
+.footer__content div a i {
+    font-size: 1.8rem;
+}
+
+@media screen and (min-width: 900px) {
+    .dogCard {
+        margin: 10px;
+    }
+ 
+    .favourites {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    main {
+        margin-bottom: 60px;
+    }
+
+    .errorMessage {
+        font-size: 1.2rem;
+        bottom: 56px;
+    }
+
+    footer {
+        height: 56px;
+    }
+    
+    .footer__content {
+        font-size: 1.4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .footer__content div {
+        margin: 0 15px;
+    }
+
+    .footer__content div:last-child {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .show {
+        bottom: 56px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    main {
+        width: 80vw;
+    }
+
+    .random {
+        justify-content: center;
+    }
+    
 }

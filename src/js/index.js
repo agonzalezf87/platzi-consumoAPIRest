@@ -14,14 +14,11 @@ const URL_FAVOURITES = '/favourites'
 const URL_UPLOAD = '/images/upload'
 
 const spanError = document.querySelector('#dogsError')
-const alertIcon = document.createElement('i')
-alertIcon.classList.add('fa-solid', 'fa-exclamation')
-spanError.appendChild(alertIcon)
-
 const dogButton = document.querySelector('#dogButton')
 const randomSection = document.querySelector('#randomDogs')
 const favouritesSection = document.querySelector('#favouriteDogs')
 const btnUploadDog = document.querySelector('#btnUploadDog')
+const body = document.querySelector('body')
 
 async function loadRandomDogs() {
     const randImg1 = document.querySelector('#randImg1')
@@ -33,8 +30,7 @@ async function loadRandomDogs() {
     try {
         const {data, status} = await api.get(URL_GET)
         if(status !== 200) {
-            spanError.style.display = 'inline-block'
-            spanError.textContent = `Error ${status}: There was an error fetching the dogs!`
+            body.appendChild(popError(null, status))
         }else {
             randImg1.src = data[0].url
             addfav1.onclick = () => saveFavouriteDog(data[0].id)
@@ -46,8 +42,7 @@ async function loadRandomDogs() {
             addfav3.onclick = () => saveFavouriteDog(data[2].id)
         }
     } catch(error) {
-        spanError.style.display = 'inline-block'
-        spanError.textContent = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
+        body.appendChild(popError(error, null))
     }
 }
 
@@ -55,8 +50,7 @@ async function loadFavouriteDogs() {
     try {
         const {data, status} = await api.get(URL_FAVOURITES)
         if(status !== 200) {
-            spanError.style.display = 'inline-block'
-            spanError.textContent = `Error ${status}: There was an error fetching the dogs!`
+            body.appendChild(popError(null, status))
         }else {
             favouritesSection.innerHTML = ''
             if(data.length > 0){
@@ -93,12 +87,7 @@ async function loadFavouriteDogs() {
             }
         }
     } catch(error) {
-        spanError.style.display = 'inline-block'
-        if(error.response){
-            spanError.textContent = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
-        }else{
-            spanError.textContent = `Error: ${error}`
-        }
+        body.appendChild(popError(error, null))
     }
 }
 
@@ -109,12 +98,7 @@ async function saveFavouriteDog(id) {
         })
         loadFavouriteDogs()
     } catch (error) {
-        spanError.style.display = 'inline-block'
-        if(error.response){
-            spanError.textContent = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
-        }else{
-            spanError.textContent = `Error: ${error}`
-        }
+        body.appendChild(popError(error, null))
     }
 }
 
@@ -123,12 +107,7 @@ async function deleteFavouriteDog(id) {
         await api.delete(`${URL_FAVOURITES}/${id}`) 
         loadFavouriteDogs()
     } catch (error) {
-        spanError.style.display = 'inline-block'
-        if(error.response){
-            spanError.textContent = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
-        }else{
-            spanError.textContent = `Error: ${error}`
-        }
+        body.appendChild(popError(error, null))
     }
 }
 
@@ -140,12 +119,38 @@ async function uploadDogPic() {
         await api.post(URL_UPLOAD, formData)
         loadFavouriteDogs()        
     } catch (error) {
-        spanError.style.display = 'inline-block'
-        if(error.response){
-            spanError.textContent = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
-        }else{
-            spanError.textContent = `Error: ${error}`
-        }
+        body.appendChild(popError(error, null))
+    }
+}
+
+const popError = (error, status) => {
+    const errorDiv = document.createElement('div')
+    const icon = document.createElement('i')
+    icon.classList.add('fa-solid', 'fa-circle-exclamation')
+    errorDiv.appendChild(icon)
+
+    if(status){
+        let text = document.createTextNode(`Error ${status}: There was an error fetching the dogs!`)
+        errorDiv.appendChild(text)
+        errorDiv.classList.add('errorMessage')
+    }else if(error.response){
+        let text = document.createTextNode(`Error ${error.response.status} ${error.code}: ${error.response.data.message}`)
+        errorDiv.appendChild(text)
+        errorDiv.classList.add('errorMessage')
+    }else {
+        let text = document.createTextNode(`Error: ${error}`)
+        errorDiv.appendChild(text)
+        errorDiv.classList.add('errorMessage')
+    }
+
+    return errorDiv
+}
+
+const removeError = () => {
+    let errorDiv = document.querySelector('.errorMessage')
+    console.log(errorDiv)
+    if(errorDiv){
+        errorDiv.remove()
     }
 }
 
