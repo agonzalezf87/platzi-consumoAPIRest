@@ -2,11 +2,16 @@ const api = axios.create({
     baseURL: 'https://api.thedogapi.com/v1'
 })
 api.defaults.headers.common['X-API-KEY'] = 'f3b59fc0-562d-403f-b3da-e17f330d106f'
+axios.interceptors.request.use(config => {
+    if (config.data instanceof FormData) {
+        Object.assign(config.headers, config.data.getHeaders());
+    }
+    return config;
+});
 
-const API_URL = 'https://api.thedogapi.com/v1/images/search?limit=3'
-const API_KEY = 'f3b59fc0-562d-403f-b3da-e17f330d106f'
-const API_URL_FAVOURITES = 'https://api.thedogapi.com/v1/favourites'
-const API_URL_UPLOAD = 'https://api.thedogapi.com/v1/images/upload'
+const URL_GET = '/images/search?limit=3'
+const URL_FAVOURITES = '/favourites'
+const URL_UPLOAD = '/images/upload'
 
 const dogButton = document.querySelector('#dogButton')
 const spanError = document.querySelector('#dogsError')
@@ -15,133 +20,123 @@ const favouritesSection = document.querySelector('#favouriteDogs')
 const btnUploadDog = document.querySelector('#btnUploadDog')
 
 async function loadRandomDogs() {
-    let res = await fetch(API_URL)
-    let data = await res.json()
+    const randImg1 = document.querySelector('#randImg1')
+    const randImg2 = document.querySelector('#randImg2')
+    const randImg3 = document.querySelector('#randImg3')
+    const addfav1 = document.querySelector('#addFav1')
+    const addfav2 = document.querySelector('#addFav2')
+    const addfav3 = document.querySelector('#addFav3')
+    try {
+        const {data, status} = await api.get(URL_GET)
+        if(status !== 200) {
+            spanError.style.display = 'inline-block'
+            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${status}: There was an error fetching the dogs!`
+        }else {
+            randImg1.src = data[0].url
+            addfav1.onclick = () => saveFavouriteDog(data[0].id)
     
-    if(res.status !==  200){
-        spanError.innerHTML = `Error ${res.status}: ${data.message}`
-    }else{
-        const randArticles = document.querySelectorAll('#randomDogs article')
-        if(randArticles.length > 0){randArticles.forEach(article => article.remove())}
-        data.forEach(dog => {
-            const dogArticle = document.createElement('article')
-            const img = document.createElement('img')
-            const saveFav = document.createElement('button')
-
-            saveFav.type = 'button'
-            saveFav.innerHTML = 'Save dog in favourites'
-            saveFav.onclick = () => saveFavouriteDog(dog.id)
-        
-            img.src = dog.url
-            img.id = dog.id
-            img.alt = 'Random dog picture'
-
-            dogArticle.appendChild(img)
-            dogArticle.appendChild(saveFav)
-
-            randomSection.appendChild(dogArticle)
-        })
+            randImg2.src = data[1].url
+            addfav2.onclick = () => saveFavouriteDog(data[1].id)
+            
+            randImg3.src = data[2].url
+            addfav3.onclick = () => saveFavouriteDog(data[2].id)
+        }
+    } catch(error) {
+        spanError.style.display = 'inline-block'
+        spanError.innerHTML = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
     }
 }
 
 async function loadFavouriteDogs() {
-    let res = await fetch(API_URL_FAVOURITES, {
-        method: 'GET',
-        headers: {
-            'X-API-KEY': API_KEY
-        }
-    })
-    let data = await res.json()
-    if(res.status !== 200){
-        spanError.innerHTML = `Error ${res.status}: ${data.message}`
-    }else{
-        const favArticles = document.querySelectorAll('#favouriteDogs article')
-        if(favArticles.length > 0){favArticles.forEach(article => article.remove())}
-        if(data.length > 0){
-            data.sort((a, b) => {
-                let dateA = new Date(a.created_at)
-                let dateB = new Date(b.created_at)
-
-                return dateB - dateA
-            })
-            data.forEach(dog => {
-                const article = document.createElement('article')
-                const img = document.createElement('img')
-                const btn = document.createElement('button')
-                btn.innerHTML = "Remove from favourites"
-                btn.type = 'button'
-                btn.onclick = () => deleteFavouriteDog(dog.id)
-        
-                img.src = dog.image.url
-        
-                article.appendChild(img)
-                article.appendChild(btn)
-    
-                favouritesSection.appendChild(article)
-            })
+    try {
+        const {data, status} = await api.get(URL_FAVOURITES)
+        if(status !== 200) {
+            spanError.style.display = 'inline-block'
+            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${status}: There was an error fetching the dogs!`
         }else {
-            favouritesSection.innerHTML += "<p>Add favourite dogs in order to display them here...</p>"
+            favouritesSection.innerHTML = ''
+            if(data.length > 0){
+                data.sort((a, b) => {
+                    let dateA = new Date(a.created_at)
+                    let dateB = new Date(b.created_at)
+                    
+                    return dateB - dateA
+                })
+                data.forEach(dog => {
+                    const article = document.createElement('article')
+                    const img = document.createElement('img')
+                    const btn = document.createElement('button')
+
+                    article.classList.add('dogCard')
+                    btn.innerHTML = "<i class='fa-solid fa-heart-circle-minus'></i>"
+                    btn.type = 'button'
+                    btn.onclick = () => deleteFavouriteDog(dog.id)
+            
+                    img.src = dog.image.url
+                    
+                    article.appendChild(img)
+                    article.appendChild(btn)
+        
+                    favouritesSection.appendChild(article)
+                })
+            }else {
+                favouritesSection.innerHTML += "<p>Add favourite dogs in order to display them here...</p>"
+            }
+        }
+    } catch(error) {
+        spanError.style.display = 'inline-block'
+        if(error.response){
+            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${error.response.status} ${error.code}: ${error.response.data.message}`
+        }else{
+            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error: ${error}`
         }
     }
 }
 
 async function saveFavouriteDog(id) {
-    const {data, status} = await api.post('/favourites', {
-        image_id: id,
-    })
-    /* const res = await fetch(API_URL_FAVOURITES, {
-        method: 'POST',
-        headers: {
-            'X-API-KEY' : API_KEY,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            image_id: id
-        }),
-    })
-    const data = await res.json() */
-
-    if(status !== 200){
-        spanError.innerHTML = `Error ${status}: ${data.message}`
-    }else{
+    try {
+        await api.post(URL_FAVOURITES, {
+            image_id: id,
+        })
         loadFavouriteDogs()
+    } catch (error) {
+        spanError.style.display = 'inline-block'
+        if(error.response){
+            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${error.response.status} ${error.code}: ${error.response.data.message}`
+        }else{
+            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error: ${error}`
+        }
     }
-    
 }
 
 async function deleteFavouriteDog(id) {
-    const res = await fetch(`${API_URL_FAVOURITES}/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'X-API-KEY': API_KEY
-        }
-    })
-    const data = await res.json()
-
-    if(res.status !== 200){
-        spanError.innerHTML = `Error ${res.status}: ${data.message}`
-    }else{
+    try {
+        await api.delete(`${API_URL_FAVOURITES}/${id}`) 
         loadFavouriteDogs()
+    } catch (error) {
+        spanError.style.display = 'inline-block'
+        if(error.response){
+            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${error.response.status} ${error.code}: ${error.response.data.message}`
+        }else{
+            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error: ${error}`
+        }
     }
 }
 
 async function uploadDogPic() {
     const form = document.querySelector('#uploadingForm')
     const formData = new FormData(form)
-
-    const res = await fetch(API_URL_UPLOAD, {
-        method: 'POST',
-        headers: {
-            //'Content-Type': 'multipart/form-data', no needed because of FormData Powers!
-            'X-API-KEY': API_KEY
-        },
-        body: formData
-    })
-
-    if(res.status !== 200){
-        spanError.innerHTML = `Error ${res.status}: ${data.message}`
-    }else{
-        loadFavouriteDogs()
+    
+    try {
+        await api.post(URL_UPLOAD, formData)
+        loadFavouriteDogs()        
+    } catch (error) {
+        spanError.style.display = 'inline-block'
+        if(error.response){
+            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${error.response.status} ${error.code}: ${error.response.data.message}`
+        }else{
+            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error: ${error}`
+        }
     }
 }
 
