@@ -6,47 +6,51 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>The Dog App</title>
         <link rel="icon" type="image/x-icon" href="./src/media/paw-solid.svg">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">   
         <link rel="stylesheet" href="./src/css/index.css">
         <script src="https://kit.fontawesome.com/31316ab1a1.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <main>
+        <header>
             <h1>The Dog App</h1>
-
+        </header>
+        <main>
             <span id="dogsError"></span>
             <section class="sectionTitle">
-                <h2>Random Dogs</h2>
+                <h2 class="sectionTitle__text">Random Dogs</h2>
             </section>
-            <section id="randomDogs">
-                <section class="dogCard">
-                    <img id="randImg1" alt="Random Dog Picture!">
-                    <button id="addFav1" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
-                </section>
-                <section class="dogCard">
-                    <img id="randImg2" alt="Random Dog Picture!">
-                    <button id="addFav2" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
-                </section>
-                <section class="dogCard">
-                    <img id="randImg3" alt="Random Dog Picture!">
-                    <button id="addFav3" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
-                </section>
-                <button id="dogButton" type="button">Reload <i class="fa-solid fa-arrow-rotate-right"></i> </button>
+            <section class="random" id="randomDogs">
+                <article class="dogCard">
+                    <img class="dogCard__image" id="randImg1" alt="Random Dog Picture!">
+                    <button class="dogCard__btn" id="addFav1" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
+                </article>
+                <article class="dogCard">
+                    <img class="dogCard__image" id="randImg2" alt="Random Dog Picture!">
+                    <button class="dogCard__btn" id="addFav2" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
+                </article>
+                <article class="dogCard">
+                    <img class="dogCard__image" id="randImg3" alt="Random Dog Picture!">
+                    <button class="dogCard__btn" id="addFav3" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
+                </article>
+            </section>
+            <section class="sectionTitle reload">
+                <button class="reloadBtn" id="dogButton" type="button">Reload <i class="fa-solid fa-arrow-rotate-right"></i> </button>
             </section>
             <section class="sectionTitle">
-                <h2>Upload your dog photography</h2>
+                <h2 class="sectionTitle__text">Favourite Dogs</h2>
             </section>
-            <section id="uploadingDog">
-                <form id="uploadingForm">
-                    <input id="file" type="file" name="file">
-                    <button type="button" id="btnUploadDog">Send dog <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+            <section class="favourites" id="favouriteDogs">
+            </section>
+            <section class="sectionTitle">
+                <h2 class="sectionTitle__text">Upload Your Dog Pic</h2>
+            </section>
+            <section class="upload" id="uploadingDog">
+                <form class="upload__form" id="uploadingForm">
+                    <input class="upload__form__file" id="file" type="file" name="file">
+                    <button class="upload__form__btn" type="button" id="btnUploadDog"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
                 </form>
-            </section>
-            
-            <section class="sectionTitle">
-                <h2>Favourite Dogs</h2>
-            </section>
-            <section id="favouriteDogs">
-                
             </section>
         </main>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

@@ -13,8 +13,12 @@ const URL_GET = '/images/search?limit=3'
 const URL_FAVOURITES = '/favourites'
 const URL_UPLOAD = '/images/upload'
 
-const dogButton = document.querySelector('#dogButton')
 const spanError = document.querySelector('#dogsError')
+const alertIcon = document.createElement('i')
+alertIcon.classList.add('fa-solid', 'fa-exclamation')
+spanError.appendChild(alertIcon)
+
+const dogButton = document.querySelector('#dogButton')
 const randomSection = document.querySelector('#randomDogs')
 const favouritesSection = document.querySelector('#favouriteDogs')
 const btnUploadDog = document.querySelector('#btnUploadDog')
@@ -30,7 +34,7 @@ async function loadRandomDogs() {
         const {data, status} = await api.get(URL_GET)
         if(status !== 200) {
             spanError.style.display = 'inline-block'
-            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${status}: There was an error fetching the dogs!`
+            spanError.textContent = `Error ${status}: There was an error fetching the dogs!`
         }else {
             randImg1.src = data[0].url
             addfav1.onclick = () => saveFavouriteDog(data[0].id)
@@ -43,7 +47,7 @@ async function loadRandomDogs() {
         }
     } catch(error) {
         spanError.style.display = 'inline-block'
-        spanError.innerHTML = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
+        spanError.textContent = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
     }
 }
 
@@ -52,7 +56,7 @@ async function loadFavouriteDogs() {
         const {data, status} = await api.get(URL_FAVOURITES)
         if(status !== 200) {
             spanError.style.display = 'inline-block'
-            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${status}: There was an error fetching the dogs!`
+            spanError.textContent = `Error ${status}: There was an error fetching the dogs!`
         }else {
             favouritesSection.innerHTML = ''
             if(data.length > 0){
@@ -66,13 +70,18 @@ async function loadFavouriteDogs() {
                     const article = document.createElement('article')
                     const img = document.createElement('img')
                     const btn = document.createElement('button')
+                    const btnIcon = document.createElement('i')
+
+                    btnIcon.classList.add('fa-solid','fa-heart-circle-minus')
 
                     article.classList.add('dogCard')
-                    btn.innerHTML = "<i class='fa-solid fa-heart-circle-minus'></i>"
                     btn.type = 'button'
+                    btn.classList.add('dogCard__btn')
                     btn.onclick = () => deleteFavouriteDog(dog.id)
+                    btn.appendChild(btnIcon)
             
                     img.src = dog.image.url
+                    img.classList.add('dogCard__image')
                     
                     article.appendChild(img)
                     article.appendChild(btn)
@@ -86,9 +95,9 @@ async function loadFavouriteDogs() {
     } catch(error) {
         spanError.style.display = 'inline-block'
         if(error.response){
-            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${error.response.status} ${error.code}: ${error.response.data.message}`
+            spanError.textContent = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
         }else{
-            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error: ${error}`
+            spanError.textContent = `Error: ${error}`
         }
     }
 }
@@ -102,23 +111,23 @@ async function saveFavouriteDog(id) {
     } catch (error) {
         spanError.style.display = 'inline-block'
         if(error.response){
-            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${error.response.status} ${error.code}: ${error.response.data.message}`
+            spanError.textContent = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
         }else{
-            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error: ${error}`
+            spanError.textContent = `Error: ${error}`
         }
     }
 }
 
 async function deleteFavouriteDog(id) {
     try {
-        await api.delete(`${API_URL_FAVOURITES}/${id}`) 
+        await api.delete(`${URL_FAVOURITES}/${id}`) 
         loadFavouriteDogs()
     } catch (error) {
         spanError.style.display = 'inline-block'
         if(error.response){
-            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${error.response.status} ${error.code}: ${error.response.data.message}`
+            spanError.textContent = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
         }else{
-            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error: ${error}`
+            spanError.textContent = `Error: ${error}`
         }
     }
 }
@@ -133,9 +142,9 @@ async function uploadDogPic() {
     } catch (error) {
         spanError.style.display = 'inline-block'
         if(error.response){
-            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error ${error.response.status} ${error.code}: ${error.response.data.message}`
+            spanError.textContent = `Error ${error.response.status} ${error.code}: ${error.response.data.message}`
         }else{
-            spanError.innerHTML = `<i class="fa-regular fa-triangle-exclamation"></i> Error: ${error}`
+            spanError.textContent = `Error: ${error}`
         }
     }
 }
