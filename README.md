@@ -1,16 +1,13 @@
-# platzi-consumoAPIRest
-Curso de consumo de API Rest en Platzi.com
+# The Dog Appi
+API comsumption with vanilla Java Script
 
-## Clase: Imágenes random de api The Dog
-- Reto 1: Crear un botón que recargue la imagen. ✅
-- Reto 2: Utilizar async await para realizar el consumo de la imagen. ✅
+## About
+This app was developed using vanilla JavaScript, HTML5 and CSS3, consuming the [The Dog](https://thedogapi.com/) API.
 
-## Clase: Endpoints y query parameters
+## Sections
+This is a single page web application, distributed in threee areas:
+- Random dogs section, limited to three random pictures.
+- Upload your pictur section which only allows .png and .jpg files, same as the API.
+- Your favourites section with no limit of pictures.
 
-## Clases: HTTP Status codes y API Key
-
-## Clases sobre: HTTP Codes
-Se añade sección de favoritos a la aplicación web.
-
-## Utilizando el método POST
-Se genera método para añadir dogs a favoritos en la API.
+[Visit the site](https://agonzalezf87.github.io/thedogappi/)

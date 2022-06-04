@@ -1,3 +1,14 @@
+:root {
+    --site-color1: #1a4c50;
+    --site-color2: #184a45;
+    --site-color3: #0d171a;
+    --site-color4: #b8baad;
+    --site-color5: #417571;
+    --site-color6: rgba(65, 117, 113, .6);
+    --site-color7: rgba(13, 23, 26, .6);
+    --site-color8: rgba(13, 23, 26, .8);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,47 +20,377 @@ html {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Secular One', sans-serif;
     font-size: 1.4rem;
-}
-
-main {
-    width: 100%;
-}
-
-main section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-main section img {
-    width: 300px;
+    background-color: var(--site-color2);
 }
 
 button {
     font-size: 1.6rem;
     line-height: 2rem;
+    width: 48px;
+    height: 48px;
     font-weight: bold;
     border: none;
-    background-color: darkcyan;
+    background-color: var(--site-color5);
     color: white;
     padding: 5px 10px;
-    border-radius: 15px;
+    border-radius: 50%;
     cursor: pointer;
     border: 3px solid transparent;
 }
 
 button:hover, button:active {
-    border: solid 3px darkolivegreen;
-    box-shadow: 1px .5px 1.5px gray;
+    background-color: var(--site-color6);
 }
 
-#dogsError {
-    background-color: maroon;
+a {
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: var(--site-color5);
+}
+
+a:hover, a:active {
+    text-decoration: underline;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: var(--site-color3);
+    width: 100vw;
+    height: 50px;
+}
+
+header > h1 {
+    font-size: 3.2rem;
+    width: 100%;
+    color: var(--site-color4);
+    text-align: center;
+}
+
+main {
+    width: 100%;
+    color: var(--site-color3);
+    display: flex;
+    flex-direction: column;
+    margin: 52px auto 80px;
+    overflow: hidden;
+}
+
+.sectionTitle {
+    width: 100%;
+    height: 28px;
+    margin: 20px 0 10px;
+}
+
+.sectionTitle__text {
+    color: var(--site-color3);
+    text-shadow: .5px 0px 3px var(--site-color5);
+    font-size: 2.4rem;
+    line-height: 2.6rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.random {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 10px 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.favourites {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 10px 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.favourites::-webkit-scrollbar, .random::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll {
+    height: 350px;
+    width: 40px;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.scroll a {
+    font-size: 3.2rem;
     color: white;
-    font-size: 1.2rem;
+    opacity: .4;
+}
+
+.scroll:hover, .scroll:active {
+    background-color: rgba(255, 255, 255, .2);
+}
+
+.scroll:hover a, .scroll:active a{
+    opacity: 1;
+}
+
+.scroll.left {
+    left: 0;
+    padding-left: 5px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.scroll.right {
+    right: 0;
+    padding-right: 5px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.dogCard {
+    width: 300px;
+    height: 350px;
+    margin: 0 10px;
+    position: relative;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--site-color3);
+    border-radius: 15px;
+    box-shadow: 0 0 10px var(--site-color7);
+}
+
+.dogCard__image {
+    max-width: 270px;
+    max-height: 320px;
+}
+
+.dogCard__btn {
+    position: absolute;
+    bottom: 10px;
+    right: 40%;
+}
+
+.upload {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.upload__card {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--site-color3);
+}
+
+.upload__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload__form__file--preview {
+    width: 100%;
+    height: 350px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-left: 1px solid var(--site-color4);
+    border-top: 1px solid var(--site-color4);
+    border-right: 1px solid var(--site-color4);
+    display: none;
+    opacity: .4;
+}
+
+.upload__form__action {
+    width: 100%;
+    display: flex;
+    border: 1px solid var(--site-color4);
+    border-radius: 0 0 5px 5px;
+}
+
+.upload__form__label {
+    width: 70%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    background-color: var(--site-color3);
+    padding: 8px 10px;
+    color: white;
+    line-height: 1.8rem;
+    cursor: pointer;
+    border-radius: 0 0 0 5px;
+    text-align: center;
+}
+
+.upload__form__label > i {
+    font-size: 1.6rem;
+    margin-left: 25px;
+}
+
+.upload__form__file {
+    display: none;
+}
+
+.upload__form__btn {
+    width: 30%;
+    height: 34px;
+    border-radius: 0 0 5px 0;
+    background-color: var(--site-color3);
+}
+
+.upload__form__label:hover, .upload__form__label:active{
+    background-color: var(--site-color8);
+}
+
+/* .favourites > .dogCard .dogCard__btn {
+    top: auto;
+    bottom: 10px;
+    right: 10px;
+} */
+
+.sectionTitle.reload {
+    display: flex;
+    justify-content: center;
+}
+
+.reloadBtn {
+    width: 128px;
+    height: 32px;
+    border-radius: 10px;
+    background-color: var(--site-color3);
+    border: 1px solid var(--site-color5);
+}
+
+.reloadBtn:hover, .reloadBtn:active, .upload__form__btn:hover, .upload__form__btn:active {
+    background-color: var(--site-color7);
+}
+
+.errorMessage{
+    width: 100%;
+    min-height: 20px;
+    background-color: #701C1C;
+    color: #F0BBBB;
+    font-size: 1rem;
     font-weight: bold;
     padding: 10px 5px;
-    display: none;
+    display: inline-block;
+    position: fixed;
+    bottom: 64px;
+    left: 0;
+    z-index: 1;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.errorMessage .fa-solid {
+    margin-right: 8px;
+}
+
+.errorMessage > i {
+    margin-right: 10px;
+}
+
+footer {
+    width: 100vw;
+    height: 64px;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: var(--site-color3);
+    color: var(--site-color4);
+    font-family: 'Patrick Hand', cursive;
+}
+
+.footer__content {
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+.footer__content div {
+    line-height: 1.5rem;
+    text-align: center;
+}
+
+.footer__content a {
+    font-size: 1.2rem;
+}
+
+.footer__content div:first-child a {
+    margin-right: 8px;
+}
+
+.footer__content div a i {
+    font-size: 1.8rem;
+}
+
+@media screen and (min-width: 900px) {
+    .dogCard {
+        margin: 10px 5px;
+    }
+ 
+    .favourites {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    main {
+        margin-bottom: 60px;
+    }
+
+    .errorMessage {
+        font-size: 1.2rem;
+        bottom: 56px;
+    }
+
+    footer {
+        height: 56px;
+    }
+    
+    .footer__content {
+        font-size: 1.4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .footer__content div {
+        margin: 0 15px;
+    }
+
+    .footer__content div:last-child {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .show {
+        bottom: 56px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    main {
+        width: 1000px;
+    }
+
+    .scroll {
+        display: none;
+    }
+
+    .random {
+        justify-content: center;
+    }
+    
 }

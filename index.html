@@ -4,51 +4,69 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>The Dog App</title>
+        <title>The Dog APPi</title>
         <link rel="icon" type="image/x-icon" href="./src/media/paw-solid.svg">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet"> 
         <link rel="stylesheet" href="./src/css/index.css">
         <script src="https://kit.fontawesome.com/31316ab1a1.js" crossorigin="anonymous"></script>
     </head>
     <body>
+        <header>
+            <h1>The Dog APPi</h1>
+        </header>
         <main>
-            <h1>The Dog App</h1>
-
-            <span id="dogsError"></span>
-            <section class="sectionTitle">
-                <h2>Random Dogs</h2>
+            <section class="random" id="randomDogs">
+                <div class="scroll left" id="randDivScrollLeft"><a id="randScrollLeft" href="javascript:void(0)"><i class="fa-solid fa-circle-chevron-left"></i></a></div>
+                <article class="dogCard">
+                    <img class="dogCard__image" id="randImg1" alt="Random Dog Picture!">
+                    <button class="dogCard__btn" id="addFav1" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
+                </article>
+                <article class="dogCard">
+                    <img class="dogCard__image" id="randImg2" alt="Random Dog Picture!">
+                    <button class="dogCard__btn" id="addFav2" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
+                </article>
+                <article class="dogCard">
+                    <img class="dogCard__image" id="randImg3" alt="Random Dog Picture!">
+                    <button class="dogCard__btn" id="addFav3" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
+                </article>
+                <div class="scroll right" id="randDivScrollRight"><a id="randScrollRight" href="javascript:void(0)"><i class="fa-solid fa-circle-chevron-right"></i></a></div>
             </section>
-            <section id="randomDogs">
-                <section class="dogCard">
-                    <img id="randImg1" alt="Random Dog Picture!">
-                    <button id="addFav1" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
-                </section>
-                <section class="dogCard">
-                    <img id="randImg2" alt="Random Dog Picture!">
-                    <button id="addFav2" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
-                </section>
-                <section class="dogCard">
-                    <img id="randImg3" alt="Random Dog Picture!">
-                    <button id="addFav3" type="button"><i class="fa-solid fa-heart-circle-plus"></i></button>
-                </section>
-                <button id="dogButton" type="button">Reload <i class="fa-solid fa-arrow-rotate-right"></i> </button>
+            <section class="sectionTitle reload">
+                <button class="reloadBtn" id="dogButton" type="button">Dogs! <i class="fa-solid fa-arrow-rotate-right"></i> </button>
             </section>
             <section class="sectionTitle">
-                <h2>Upload your dog photography</h2>
+                <h2 class="sectionTitle__text">Upload Your Dog Pic</h2>
             </section>
-            <section id="uploadingDog">
-                <form id="uploadingForm">
-                    <input id="file" type="file" name="file">
-                    <button type="button" id="btnUploadDog">Send dog <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-                </form>
+            <section class="upload">
+                <section class="upload__card" id="uploadingDog">
+                    <form class="upload__form" id="uploadingForm">
+                        <div class="upload__form__file--preview" id="uploadPreview"></div>
+                        <div class="upload__form__action">
+                            <label class="upload__form__label" for="file">Select Picture<i class="fa-solid fa-shield-dog"></i></label>
+                            <input class="upload__form__file" id="file" type="file" name="file" accept=".jpg, .png">
+                            <button class="upload__form__btn" type="button" id="btnUploadDog"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+                        </div>
+                    </form>
+                </section>
             </section>
-            
             <section class="sectionTitle">
-                <h2>Favourite Dogs</h2>
+                <h2 class="sectionTitle__text">Your Favourite Dogs</h2>
             </section>
-            <section id="favouriteDogs">
-                
+            <section class="favourites" id="favouriteDogs">
             </section>
         </main>
+        <footer>
+            <section class="footer__content">
+                <div>
+                    <a href="https://github.com/agonzalezf87" target="_blank"><i class="fa-brands fa-github"></i></a>&copy; Antonio Rafael González Ferrer 2022
+                </div>
+                <div>Visit the <a href="https://github.com/agonzalezf87/thedogapp" target="_blank">Repository</a></div>
+                <div>Powered by <a href="https://thedogapi.com/" target="_blank">The Dog API</a> & <a href="https://axios-http.com/" target="_blank">Axios</a></div>
+            </section>
+        </footer>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="./src/js/index.js"></script>
     </body>
