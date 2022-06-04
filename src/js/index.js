@@ -15,11 +15,17 @@ const URL_UPLOAD = '/images/upload'
 
 const body = document.querySelector('body')
 const dogButton = document.querySelector('#dogButton')
+const randomDogs = document.querySelector('#randomDogs')
+const randDivScrollLeft = document.querySelector('#randDivScrollLeft')
+const randScrollLeft = document.querySelector('#randScrollLeft')
+const randDivScrollRight = document.querySelector('#randDivScrollRight')
+const randScrollRight = document.querySelector('#randScrollRight')
 const favouritesSection = document.querySelector('#favouriteDogs')
 const btnUploadDog = document.querySelector('#btnUploadDog')
 const fileInput = document.querySelector('#file')
 
 async function loadRandomDogs() {
+    randomDogs.scrollLeft = 0
     const randImg1 = document.querySelector('#randImg1')
     const randImg2 = document.querySelector('#randImg2')
     const randImg3 = document.querySelector('#randImg3')
@@ -62,7 +68,6 @@ async function loadFavouriteDogs() {
                     
                     return dateB - dateA
                 })
-                console.log(data)
                 data.forEach(dog => {
                     const article = document.createElement('article')
                     const img = document.createElement('img')
@@ -175,9 +180,48 @@ const loadPreview = (evt) => {
     }
 }
 
+var randomScrolled = 0
+
+const smoothScroll = (container, direction) => {
+    let articles = container.getElementsByTagName('article')
+    let limit = (articles.length * 320) - 320
+    
+    switch (direction) {
+        case 'right':
+            if(randomScrolled === 0 || randomScrolled < limit){
+                randomScrolled += 320
+            }else if(randomScrolled === limit){
+                randomScrolled = 0
+            }
+            console.log(randomScrolled) 
+            container.scroll({
+                top: 0,
+                left: randomScrolled,
+                behavior: "smooth"
+            })
+            break;
+            
+        case 'left':
+            if(randomScrolled === limit || randomScrolled > 0){
+                randomScrolled -= 320
+            }else if(randomScrolled === 0){
+                randomScrolled = limit
+            }
+            container.scroll({
+                    top: 0,
+                    left: randomScrolled,
+                    behavior: "smooth"
+                })    
+            break;
+    }
+}
+
 dogButton.onclick = () => loadRandomDogs()
 btnUploadDog.onclick = () => uploadDogPic()
 fileInput.onchange = () => loadPreview()
+
+randDivScrollLeft.onclick = () => smoothScroll(randomDogs, 'left')
+randDivScrollRight.onclick = () => smoothScroll(randomDogs, 'right')
 
 loadRandomDogs()
 loadFavouriteDogs()

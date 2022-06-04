@@ -58,7 +58,7 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 2;
     background-color: var(--site-color3);
     width: 100vw;
     height: 50px;
@@ -100,6 +100,8 @@ main {
     overflow-x: auto;
     flex-wrap: nowrap;
     padding: 10px 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .favourites {
@@ -107,12 +109,56 @@ main {
     overflow-x: auto;
     flex-wrap: nowrap;
     padding: 10px 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.favourites::-webkit-scrollbar, .random::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll {
+    height: 350px;
+    width: 40px;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.scroll a {
+    font-size: 3.2rem;
+    color: white;
+    opacity: .4;
+}
+
+.scroll:hover, .scroll:active {
+    background-color: rgba(255, 255, 255, .2);
+}
+
+.scroll:hover a, .scroll:active a{
+    opacity: 1;
+}
+
+.scroll.left {
+    left: 0;
+    padding-left: 5px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.scroll.right {
+    right: 0;
+    padding-right: 5px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
 }
 
 .dogCard {
     width: 300px;
     height: 350px;
-    margin: 0 15px;
+    margin: 0 10px;
     position: relative;
     display: flex;
     flex: 0 0 auto;
@@ -121,7 +167,6 @@ main {
     background-color: var(--site-color3);
     border-radius: 15px;
     box-shadow: 0 0 10px var(--site-color7);
-    border: 5px solid var(--site-color4)
 }
 
 .dogCard__image {
@@ -131,8 +176,8 @@ main {
 
 .dogCard__btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 25px;
 }
 
 .upload {
@@ -146,6 +191,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--site-color3);
 }
 
 .upload__form {
@@ -165,6 +211,7 @@ main {
     border-top: 1px solid var(--site-color4);
     border-right: 1px solid var(--site-color4);
     display: none;
+    opacity: .4;
 }
 
 .upload__form__action {
@@ -184,11 +231,12 @@ main {
     line-height: 1.8rem;
     cursor: pointer;
     border-radius: 0 0 0 5px;
+    text-align: center;
 }
 
 .upload__form__label > i {
     font-size: 1.6rem;
-    margin-left: 5px;
+    margin-left: 25px;
 }
 
 .upload__form__file {
