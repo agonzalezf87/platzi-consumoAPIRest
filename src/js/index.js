@@ -130,6 +130,7 @@ async function saveFavouriteDog(id) {
         await api.post(URL_FAVOURITES, {
             image_id: id,
         })
+        loadRandomDogs()
         loadFavouriteDogs()
     } catch (error) {
         body.appendChild(popError(error, null))
@@ -204,37 +205,74 @@ const loadPreview = (evt) => {
     }
 }
 
-var randomScrolled = 0
+var scrollCount = {
+    randScroll: 0,
+    favScroll: 0
+}
 
 const smoothScroll = (container, direction) => {
     let articles = container.getElementsByTagName('article')
-    let limit = (articles.length * 320) - 320
-    switch (direction) {
-        case 'right':
-            if(randomScrolled === 0 || randomScrolled < limit){
-                randomScrolled += 320
-            }else if(randomScrolled === limit){
-                randomScrolled = 0
+    let containerWidth = parseInt(body.scrollWidth)
+    let limit = (articles.length * containerWidth) - containerWidth
+    switch (container.className){
+        case 'random':
+            switch (direction) {
+                case 'right':
+                    if(scrollCount.randScroll === 0 || scrollCount.randScroll < limit){
+                        scrollCount.randScroll += containerWidth
+                    }else if(scrollCount.randScroll === limit){
+                        scrollCount.randScroll = 0
+                    }
+                    container.scroll({
+                        top: 0,
+                        left: scrollCount.randScroll,
+                        behavior: "smooth"
+                    })
+                break;
+                    
+                case 'left':
+                    if(scrollCount.randScroll === limit || scrollCount.randScroll > 0){
+                        scrollCount.randScroll -= containerWidth
+                    }else if(scrollCount.randScroll === 0){
+                        scrollCount.randScroll = limit
+                    }
+                    container.scroll({
+                            top: 0,
+                            left: scrollCount.randScroll,
+                            behavior: "smooth"
+                        })    
+                break;
             }
-            container.scroll({
-                top: 0,
-                left: randomScrolled,
-                behavior: "smooth"
-            })
-            break;
-            
-        case 'left':
-            if(randomScrolled === limit || randomScrolled > 0){
-                randomScrolled -= 320
-            }else if(randomScrolled === 0){
-                randomScrolled = limit
+        break;
+        case 'favourites':
+            switch (direction) {
+                case 'right':
+                    if(scrollCount.favScroll === 0 || scrollCount.favScroll < limit){
+                        scrollCount.favScroll += containerWidth
+                    }else if(scrollCount.favScroll === limit){
+                        scrollCount.favScroll = 0
+                    }
+                    container.scroll({
+                        top: 0,
+                        left: scrollCount.favScroll,
+                        behavior: "smooth"
+                    })
+                break;
+                    
+                case 'left':
+                    if(scrollCount.favScroll === limit || scrollCount.favScroll > 0){
+                        scrollCount.favScroll -= containerWidth
+                    }else if(scrollCount.favScroll === 0){
+                        scrollCount.favScroll = limit
+                    }
+                    container.scroll({
+                            top: 0,
+                            left: scrollCount.favScroll,
+                            behavior: "smooth"
+                        })    
+                break;
             }
-            container.scroll({
-                    top: 0,
-                    left: randomScrolled,
-                    behavior: "smooth"
-                })    
-            break;
+        break;
     }
 }
 
