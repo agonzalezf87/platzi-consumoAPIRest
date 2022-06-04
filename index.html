@@ -41,9 +41,12 @@
             <section class="upload">
                 <section class="upload__card" id="uploadingDog">
                     <form class="upload__form" id="uploadingForm">
-                        <label class="upload__form__label" for="file">Select Picture<i class="fa-solid fa-shield-dog"></i></label>
-                        <input class="upload__form__file" id="file" type="file" name="file" accept=".jpg, .png">
-                        <button class="upload__form__btn" type="button" id="btnUploadDog"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+                        <div class="upload__form__file--preview" id="uploadPreview"></div>
+                        <div class="upload__form__action">
+                            <label class="upload__form__label" for="file">Select Picture<i class="fa-solid fa-shield-dog"></i></label>
+                            <input class="upload__form__file" id="file" type="file" name="file" accept=".jpg, .png">
+                            <button class="upload__form__btn" type="button" id="btnUploadDog"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+                        </div>
                     </form>
                 </section>
             </section>

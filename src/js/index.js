@@ -9,16 +9,15 @@ axios.interceptors.request.use(config => {
     return config;
 });
 
-const URL_GET = '/images/search?limit=3'
+const URL_GET = '/images'
 const URL_FAVOURITES = '/favourites'
 const URL_UPLOAD = '/images/upload'
 
-const spanError = document.querySelector('#dogsError')
+const body = document.querySelector('body')
 const dogButton = document.querySelector('#dogButton')
-const randomSection = document.querySelector('#randomDogs')
 const favouritesSection = document.querySelector('#favouriteDogs')
 const btnUploadDog = document.querySelector('#btnUploadDog')
-const body = document.querySelector('body')
+const fileInput = document.querySelector('#file')
 
 async function loadRandomDogs() {
     const randImg1 = document.querySelector('#randImg1')
@@ -28,9 +27,10 @@ async function loadRandomDogs() {
     const addfav2 = document.querySelector('#addFav2')
     const addfav3 = document.querySelector('#addFav3')
     try {
-        const {data, status} = await api.get(URL_GET)
+        const {data, status} = await api.get(`${URL_GET}/search?limit=3`)
         if(status !== 200) {
             body.appendChild(popError(null, status))
+            window.setTimeout(removeError,5000)
         }else {
             randImg1.src = data[0].url
             addfav1.onclick = () => saveFavouriteDog(data[0].id)
@@ -43,6 +43,7 @@ async function loadRandomDogs() {
         }
     } catch(error) {
         body.appendChild(popError(error, null))
+        window.setTimeout(removeError,5000)
     }
 }
 
@@ -51,6 +52,7 @@ async function loadFavouriteDogs() {
         const {data, status} = await api.get(URL_FAVOURITES)
         if(status !== 200) {
             body.appendChild(popError(null, status))
+            window.setTimeout(removeError,5000)
         }else {
             favouritesSection.innerHTML = ''
             if(data.length > 0){
@@ -60,6 +62,7 @@ async function loadFavouriteDogs() {
                     
                     return dateB - dateA
                 })
+                console.log(data)
                 data.forEach(dog => {
                     const article = document.createElement('article')
                     const img = document.createElement('img')
@@ -88,6 +91,7 @@ async function loadFavouriteDogs() {
         }
     } catch(error) {
         body.appendChild(popError(error, null))
+        window.setTimeout(removeError,5000)
     }
 }
 
@@ -99,6 +103,7 @@ async function saveFavouriteDog(id) {
         loadFavouriteDogs()
     } catch (error) {
         body.appendChild(popError(error, null))
+        window.setTimeout(removeError,5000)
     }
 }
 
@@ -108,6 +113,7 @@ async function deleteFavouriteDog(id) {
         loadFavouriteDogs()
     } catch (error) {
         body.appendChild(popError(error, null))
+        window.setTimeout(removeError,5000)
     }
 }
 
@@ -120,6 +126,7 @@ async function uploadDogPic() {
         loadFavouriteDogs()        
     } catch (error) {
         body.appendChild(popError(error, null))
+        window.setTimeout(removeError,5000)
     }
 }
 
@@ -154,8 +161,23 @@ const removeError = () => {
     }
 }
 
+const loadPreview = (evt) => {
+    try {
+        const divPreview = document.querySelector('#uploadPreview')
+        const [file] = fileInput.files
+        if(file){
+            divPreview.style.backgroundImage = `url(${URL.createObjectURL(file)})`
+            divPreview.style.display = 'inline-block'
+        }
+    } catch (error) {
+        body.appendChild(popError(error, null))
+        window.setTimeout(removeError,5000)
+    }
+}
+
 dogButton.onclick = () => loadRandomDogs()
 btnUploadDog.onclick = () => uploadDogPic()
+fileInput.onchange = () => loadPreview()
 
 loadRandomDogs()
 loadFavouriteDogs()
