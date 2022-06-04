@@ -1,3 +1,5 @@
+/* Variables */
+
 :root {
     --site-color1: #1a4c50;
     --site-color2: #184a45;
@@ -8,6 +10,8 @@
     --site-color7: rgba(13, 23, 26, .6);
     --site-color8: rgba(13, 23, 26, .8);
 }
+
+/* Normalization */
 
 * {
     margin: 0;
@@ -80,6 +84,22 @@ main {
     overflow: hidden;
 }
 
+footer {
+    width: 100vw;
+    height: 64px;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: var(--site-color3);
+    color: var(--site-color4);
+    font-family: 'Patrick Hand', cursive;
+}
+
+/*------ Common components ------*/
+
+/* Title Section */
+
 .sectionTitle {
     width: 100%;
     height: 28px;
@@ -94,6 +114,8 @@ main {
     text-align: center;
     font-weight: 600;
 }
+
+/* Random Section & Favourite Section */
 
 .random {
     display: flex;
@@ -155,10 +177,12 @@ main {
     border-bottom-left-radius: 15px;
 }
 
+/* Dogs Cards */
+
 .dogCard {
     width: 300px;
     height: 350px;
-    margin: 0 10px;
+    margin: 0 calc(calc(100% - 300px) / 2);
     position: relative;
     display: flex;
     flex: 0 0 auto;
@@ -179,6 +203,27 @@ main {
     bottom: 10px;
     right: 40%;
 }
+
+/* Reload Button */
+
+.sectionTitle.reload {
+    display: flex;
+    justify-content: center;
+}
+
+.reloadBtn {
+    width: fit-content;
+    height: 32px;
+    border-radius: 10px;
+    background-color: var(--site-color3);
+    border: 1px solid var(--site-color5);
+}
+
+.reloadBtn:hover, .reloadBtn:active, .upload__form__btn:hover, .upload__form__btn:active {
+    background-color: var(--site-color7);
+}
+
+/* Upload Dog Setcion */
 
 .upload {
     width: 100%;
@@ -254,28 +299,7 @@ main {
     background-color: var(--site-color8);
 }
 
-/* .favourites > .dogCard .dogCard__btn {
-    top: auto;
-    bottom: 10px;
-    right: 10px;
-} */
-
-.sectionTitle.reload {
-    display: flex;
-    justify-content: center;
-}
-
-.reloadBtn {
-    width: 128px;
-    height: 32px;
-    border-radius: 10px;
-    background-color: var(--site-color3);
-    border: 1px solid var(--site-color5);
-}
-
-.reloadBtn:hover, .reloadBtn:active, .upload__form__btn:hover, .upload__form__btn:active {
-    background-color: var(--site-color7);
-}
+/* Error Div */
 
 .errorMessage{
     width: 100%;
@@ -291,6 +315,7 @@ main {
     left: 0;
     z-index: 1;
     font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
 }
 
 .errorMessage .fa-solid {
@@ -301,17 +326,7 @@ main {
     margin-right: 10px;
 }
 
-footer {
-    width: 100vw;
-    height: 64px;
-    padding-top: 10px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    background-color: var(--site-color3);
-    color: var(--site-color4);
-    font-family: 'Patrick Hand', cursive;
-}
+/* Footer */
 
 .footer__content {
     width: 100%;
@@ -380,7 +395,7 @@ footer {
     }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1000px) {
     main {
         width: 1000px;
     }

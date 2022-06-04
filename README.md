@@ -1,5 +1,5 @@
 # The Dog Appi
-API comsumption with vanilla Java Script
+API consumption with vanilla Java Script
 
 ## About
 This app was developed using vanilla JavaScript, HTML5 and CSS3, consuming the [The Dog](https://thedogapi.com/) API.
