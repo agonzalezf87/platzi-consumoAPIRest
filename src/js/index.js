@@ -75,25 +75,50 @@ async function loadFavouriteDogs() {
                     const btnIcon = document.createElement('i')
 
                     btnIcon.classList.add('fa-solid','fa-heart-circle-minus')
-
+                    
                     article.classList.add('dogCard')
                     btn.type = 'button'
                     btn.classList.add('dogCard__btn')
                     btn.onclick = () => deleteFavouriteDog(dog.id)
                     btn.appendChild(btnIcon)
-            
+                    
                     img.src = dog.image.url
                     img.classList.add('dogCard__image')
                     
                     article.appendChild(img)
                     article.appendChild(btn)
-        
+                    
                     favouritesSection.appendChild(article)
                 })
             }else {
                 favouritesSection.innerHTML += "<p>Add favourite dogs in order to display them here...</p>"
             }
         }
+        const scrRight = document.createElement('div')
+        const scrLeft = document.createElement('div')
+        const btnRight = document.createElement('a')
+        const btnLeft = document.createElement('a')
+        const icnRight = document.createElement('i')
+        const icnLeft = document.createElement('i')
+        
+        icnLeft.classList.add('fa-solid', 'fa-circle-chevron-left')
+        icnRight.classList.add('fa-solid', 'fa-circle-chevron-right')
+        btnLeft.setAttribute('href', 'javascript:void(0)')
+        btnRight.setAttribute('href', 'javascript:void(0)')
+        btnLeft.appendChild(icnLeft)
+        btnRight.appendChild(icnRight)
+        
+        scrLeft.classList.add('scroll', 'left')
+        scrRight.classList.add('scroll', 'right')
+        
+        scrLeft.appendChild(btnLeft)
+        scrRight.appendChild(btnRight)
+
+        favouritesSection.appendChild(scrLeft)
+        favouritesSection.appendChild(scrRight)
+
+        btnLeft.onclick = () => smoothScroll(favouritesSection, 'left')
+        btnRight.onclick = () => smoothScroll(favouritesSection, 'right')
     } catch(error) {
         body.appendChild(popError(error, null))
         window.setTimeout(removeError,5000)
@@ -160,7 +185,6 @@ const popError = (error, status) => {
 
 const removeError = () => {
     let errorDiv = document.querySelector('.errorMessage')
-    console.log(errorDiv)
     if(errorDiv){
         errorDiv.remove()
     }
@@ -185,7 +209,6 @@ var randomScrolled = 0
 const smoothScroll = (container, direction) => {
     let articles = container.getElementsByTagName('article')
     let limit = (articles.length * 320) - 320
-    
     switch (direction) {
         case 'right':
             if(randomScrolled === 0 || randomScrolled < limit){
@@ -193,7 +216,6 @@ const smoothScroll = (container, direction) => {
             }else if(randomScrolled === limit){
                 randomScrolled = 0
             }
-            console.log(randomScrolled) 
             container.scroll({
                 top: 0,
                 left: randomScrolled,

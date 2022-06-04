@@ -176,8 +176,8 @@ main {
 
 .dogCard__btn {
     position: absolute;
-    top: 15px;
-    right: 25px;
+    bottom: 10px;
+    right: 40%;
 }
 
 .upload {
@@ -254,11 +254,11 @@ main {
     background-color: var(--site-color8);
 }
 
-.favourites > .dogCard .dogCard__btn {
+/* .favourites > .dogCard .dogCard__btn {
     top: auto;
     bottom: 10px;
     right: 10px;
-}
+} */
 
 .sectionTitle.reload {
     display: flex;
@@ -382,7 +382,11 @@ footer {
 
 @media screen and (min-width: 1024px) {
     main {
-        width: 80vw;
+        width: 1000px;
+    }
+
+    .scroll {
+        display: none;
     }
 
     .random {
